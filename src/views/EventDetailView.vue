@@ -1,18 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Ref } from 'vue';
-import type { EventItem } from "@/type"
+import { ref,onMounted,defineProps } from 'vue'
+
+import type  Event from "@/type/Event"
 import EventService from '@/services/EventService';
-const event = ref<EventItem |null>(null)
+
+const event = ref<Event |null>(null)
 const props = defineProps({
-    id: String
+    id: String,
+    required: true,
 })
 
-EventService.getEventsByID(Number(props.id)).then((res)=>{
+//Initially , component in template will be loaded before onMounted
+onMounted(()=>{
+    EventService.getEventsByID(Number(props.id))
+    .then((res)=>{
+        console.log("res",res.data);
+        
     event.value = res.data
+
 })
 .catch((err)=>{
-    console.log(err)})
+    console.log('There was an error',err)
+})
+})
+
+
+
+
 </script>
 <template>
     <div v-if="event">

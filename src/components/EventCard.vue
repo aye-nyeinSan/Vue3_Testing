@@ -1,27 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import Event from '@/types/Event';
+import { ref,defineProps } from 'vue';
+import Event from '@/type/Event';
 import { RouterLink } from 'vue-router';
 defineProps<{
   event: Event
 }>()
-// const event = ref({
-//     id: 5928101,
-//     category: 'animal welfare',
-//     title: 'Cat Adoption Day',
-//     description:'Find your new feline friend at this event!',
-//     location: 'Meow Town',
-//     date: 'Jaunary 28,2022',
-//     time: '12:00',
-//     petsAllowed: true,
-//     organizer:'Kat Laydee'
-// })
+
 </script>
 
 <template>
 
      
-      <RouterLink :to="{name:'event-detail', params:{id: event?.id}}">
+<RouterLink class='event-link' :to="{name:'event-detail', params:{id: event?.id}}">
 
     <div class="event-class">
         <div class="event-card">
@@ -33,6 +23,10 @@ defineProps<{
 
 </template>
 <style scoped>
+.event-link{
+    text-decoration: none;
+    color: #2c3e50;
+}
 .event-class{
 padding: 20px;
 width: 250px;

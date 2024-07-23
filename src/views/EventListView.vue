@@ -8,7 +8,7 @@ import EventService from '@/services/EventService';
 const events=ref<Event[]>([])
 onMounted(()=>{
   EventService.getAPIEvents().then((response)=>{
-    events.value=response.data
+    events.value=  response.data
   })
   })
 

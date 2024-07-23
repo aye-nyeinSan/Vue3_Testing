@@ -1,4 +1,6 @@
 import axios, { type AxiosResponse } from 'axios';
+import type { Event } from '@/type';
+
 const apiClient = axios.create({
     baseURL: 'https://my-json-server.typicode.com/aye-nyeinSan/652115502',
     withCredentials: false,
@@ -19,12 +21,12 @@ const apiNewClient = axios.create({
 
 export default {
     getAPIEvents(){
-        return apiClient.get<EventItem[]>('/events')
+        return apiClient.get<Event[]>('/events')
     },
     getNewAPIEvents(){
         return apiNewClient.get('/students')
     },
-    getEventsByID(id:number) : Promise<AxiosResponse<EventItem>>{
-        return apiClient.get<EventItem>(`events/${id}`)
+    getEventsByID(id:number) : Promise<AxiosResponse<Event>>{
+        return apiClient.get<Event>(`events/${id}`)
     }
 }
