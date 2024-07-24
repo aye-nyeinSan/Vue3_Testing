@@ -20,8 +20,8 @@ const apiNewClient = axios.create({
 
 
 export default {
-    getAPIEvents(){
-        return apiClient.get<Event[]>('/events')
+    getAPIEvents(perPage:number,page:Number){
+        return apiClient.get<Event[]>('/events?_limit='+perPage+'&_page='+page)
     },
     getNewAPIEvents(){
         return apiNewClient.get('/students')

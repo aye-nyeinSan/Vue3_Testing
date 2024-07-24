@@ -1,15 +1,27 @@
 <script setup lang="ts">
 import EventCard from '@/components/EventCard.vue';
 import NewEventCard from '@/components/NewEventCard.vue';
-import Event from '@/types/Event'
+import  {type Event }from '@/types'
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,computed,defineProps, watchEffect } from 'vue';
 import EventService from '@/services/EventService';
-const events=ref<Event[]>([])
+
+const events=ref<Event[]| null>(null)
+const props = defineProps({
+ page:{
+  type: Number,
+  required: true
+ }
+})
+const page = computed(()=>props.page)
 onMounted(()=>{
-  EventService.getAPIEvents().then((response)=>{
+  watchEffect(()=>{
+    EventService.getAPIEvents(2, page.value)
+  .then((response)=>{
     events.value=  response.data
   })
+  })
+
   })
 
 
@@ -20,8 +32,22 @@ onMounted(()=>{
   <!-- new element-->
 <div class="events">
   <EventCard  v-for="event in events" :key="event.id" :event="event"/>
-  <NewEventCard  v-for ="event in events" :key="event.id" :event="event" />>
+  <!-- <NewEventCard  v-for ="event in events" :key="event.id" :event="event" />> -->
+
 </div>
+<RouterLink 
+:to="{name:'event-list-view',query:{page: page-1}}"
+rel="prev"
+v-if="page != 1"
+
+>
+Prev Page
+</RouterLink>
+<RouterLink
+:to="{name:'event-list-view',query:{page: page +1}}"
+rel="next">
+Next Page
+</RouterLink>
 </template>
 <style scoped>
 .events{
