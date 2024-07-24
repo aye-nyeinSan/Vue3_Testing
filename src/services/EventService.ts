@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from 'axios';
-import type { Event } from '@/type';
+import type { Event } from '@/types';
 
 const apiClient = axios.create({
     baseURL: 'https://my-json-server.typicode.com/aye-nyeinSan/652115502',
