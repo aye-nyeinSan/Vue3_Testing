@@ -3,7 +3,7 @@
 
   import { type Event } from '@/types';
   import EventService from '@/services/EventService';
-  import { RouterLink } from 'vue-router';
+  import { RouterLink, useRouter } from 'vue-router';
 
   const event = ref<Event | null>(null);
   const props = defineProps({
@@ -12,17 +12,28 @@
       required: true,
     },
   });
+  const router = useRouter();
 
   //Initially , component in template will be loaded before onMounted
   onMounted(() => {
     EventService.getEventsByID(parseInt(props.id))
-      .then((res) => {
-       // console.log('res', res.data);
+      .then((response) => {
+        // console.log('res', res.data);
 
-        event.value = res.data;
+        event.value = response.data;
       })
-      .catch((err) => {
-        console.log('There was an error', err);
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          router.push({
+            name: '404-resource-view',
+            params: { resource: 'event' },
+          });
+        }
+        else{
+            router.push({
+                name: 'network-error-view',
+            });
+        }
       });
   });
 </script>
