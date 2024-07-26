@@ -28,11 +28,10 @@
             name: '404-resource-view',
             params: { resource: 'event' },
           });
-        }
-        else{
-            router.push({
-                name: 'network-error-view',
-            });
+        } else {
+          router.push({
+            name: 'network-error-view',
+          });
         }
       });
   });

@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import EventCard from '@/components/EventCard.vue';
-  import NewEventCard from '@/components/NewEventCard.vue';
+  //import NewEventCard from '@/components/NewEventCard.vue';
   import { type Event } from '@/types';
 
   import { ref, onMounted, computed, defineProps, watchEffect } from 'vue';
   import EventService from '@/services/EventService';
+import {  useRouter } from 'vue-router';
 
   const events = ref<Event[] | null>(null);
   const totalEvents = ref(0);
@@ -12,19 +13,39 @@
     const totalPages = Math.ceil(totalEvents.value / 2);
     return page.value < totalPages;
   });
+  const router = useRouter();
   const props = defineProps({
     page: {
       type: Number,
       required: true,
     },
+    limit:{
+         type: Number,
+      required: true,
+    }
   });
   const page = computed(() => props.page);
+  const limit = computed(()=> props.limit)
   onMounted(() => {
     watchEffect(() => {
-      EventService.getAPIEvents(2, page.value).then((response) => {
+      EventService.getAPIEvents(limit.value, page.value).then((response) => {
         events.value = response.data;
         totalEvents.value = response.headers['x-total-count'];
+      }).catch((error) => {
+        if (error.response && error.response.status === 404) {
+          router.push({
+            name: '404-resource-view',
+            params: { resource: 'event' },
+          });
+        }
+        else{
+            router.push({
+                name: 'network-error-view',
+            });
+        }
       });
+        
+      
     });
   });
 </script>
@@ -39,7 +60,7 @@
   <div class="pagination">
     <RouterLink
       id="page-prev"
-      :to="{ name: 'event-list-view', query: { page: page - 1 } }"
+      :to="{ name: 'event-list-view', query: { page: page - 1 ,limit: props.limit}}"
       rel="prev"
       v-if="page != 1"
     >
@@ -47,7 +68,7 @@
     </RouterLink>
     <RouterLink
       id="page-next"
-      :to="{ name: 'event-list-view', query: { page: page + 1 } }"
+      :to="{ name: 'event-list-view', query: { page: page + 1 ,limit: props.limit} }"
       rel="next"
       v-if="hasNextPage"
     >
@@ -67,7 +88,7 @@
     justify-content: center;
     width: 290px;
   }
-  .pagonation a {
+  .pagination a {
     flex: 1;
     text-decoration: none;
     color: #2c3e50;

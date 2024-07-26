@@ -17,6 +17,7 @@ const router = createRouter({
       component: EventListView,
       props: (route) => ({
         page: parseInt(route.query.page?.toString() || '1'),
+        limit: parseInt(route.query.limit?.toString() || '2'),
       }),
     },
     {
@@ -60,22 +61,24 @@ const router = createRouter({
       ],
     },
     {
-      path:'/404/:resource',
-      name:'404-resource-view',
+      path: '/404/:resource',
+      name: '404-resource-view',
       component: NotFoundView,
-      props: true
+      props: true,
     },
     {
-      path:'/network-error',
+      path: '/network-error',
       name: 'network-error-view',
       component: NetworkErrorView,
+      props: true,
     },
 
     {
-      path:'/:catchAll(.*)',
-      name : 'not-found',
+      path: '/:catchAll(.*)',
+      name: 'not-found',
       component: NotFoundView,
-    }
+      props: true,
+    },
   ],
 });
 
