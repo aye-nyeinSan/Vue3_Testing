@@ -6,6 +6,7 @@
   import { ref, onMounted, computed, defineProps, watchEffect } from 'vue';
   import EventService from '@/services/EventService';
 import {  useRouter } from 'vue-router';
+import nProgress from 'nprogress';
 
   const events = ref<Event[] | null>(null);
   const totalEvents = ref(0);
@@ -28,6 +29,8 @@ import {  useRouter } from 'vue-router';
   const limit = computed(()=> props.limit)
   onMounted(() => {
     watchEffect(() => {
+      events.value = null;
+     
       EventService.getAPIEvents(limit.value, page.value).then((response) => {
         events.value = response.data;
         totalEvents.value = response.headers['x-total-count'];
@@ -45,7 +48,8 @@ import {  useRouter } from 'vue-router';
         // }
         console.log(error);
         
-      });
+      })
+     
         
         
       
