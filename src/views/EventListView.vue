@@ -11,7 +11,7 @@ import nProgress from 'nprogress';
   const events = ref<Event[] | null>(null);
   const totalEvents = ref(0);
   const hasNextPage = computed(() => {
-    const totalPages = Math.ceil(totalEvents.value / 2);
+    const totalPages = Math.ceil(totalEvents.value / 3);
     return page.value < totalPages;
   });
   const router = useRouter();
@@ -29,9 +29,8 @@ import nProgress from 'nprogress';
   const limit = computed(()=> props.limit)
   onMounted(() => {
     watchEffect(() => {
-      events.value = null;
      
-      EventService.getAPIEvents(limit.value, page.value).then((response) => {
+      EventService.getAPIEvents(3, page.value).then((response) => {
         events.value = response.data;
         totalEvents.value = response.headers['x-total-count'];
       }).catch((error) => {
