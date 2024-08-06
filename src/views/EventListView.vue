@@ -6,7 +6,7 @@
   import { ref, onMounted, computed, defineProps, watchEffect } from 'vue';
   import EventService from '@/services/EventService';
 import {  useRouter } from 'vue-router';
-import nProgress from 'nprogress';
+
 
   const events = ref<Event[] | null>(null);
   const totalEvents = ref(0);
