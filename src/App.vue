@@ -1,55 +1,67 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+  import { RouterLink, RouterView } from 'vue-router';
+  import {useMessageStore} from '@/stores/message'
+  import { storeToRefs } from 'pinia';
+  const store = useMessageStore()
+  const { message }=  storeToRefs(store)
 </script>
 
 <template>
-<div id="layout">
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/" >Event</RouterLink> |
+  <div id="layout">
+    <header>
+      <div id="flashMessage" v-if="message">
+        <h4>{{ message }}</h4>
+      </div>
+      <div class="wrapper">
+        <nav>
+          <RouterLink :to="{ name: 'event-list-view' }">Event</RouterLink> |
 
-        <RouterLink to="/about" >About</RouterLink>
-        |<RouterLink to="/students" >Students</RouterLink>
+          <RouterLink :to="{ name: 'about' }">About</RouterLink>
+          |<RouterLink :to="{ name: 'students' }">Students</RouterLink>
+        </nav>
+      </div>
+    </header>
 
-      </nav>
-    </div>
-  </header>
- 
-  <RouterView />
-</div>
-
-  
+    <RouterView />
+  </div>
 </template>
 
-<style >
-
-
-#layout{
-  font-family: Avenir, Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  margin-top: 2rem;
-  color: #2c3e50
+<style>
+@keyframes yellowfade {
+  from {
+    background-color: yellow;
+  }
+  to{
+    background-color: transparent;
+  }
+  
 }
-
-nav{
-  padding: 30px;
+#flashMessage {
+  animation: yellowfade 3s ease-in-out;
 }
+  #layout {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    margin-top: 2rem;
+    color: #2c3e50;
+  }
 
+  nav {
+    padding: 30px;
+  }
 
-nav a {
- font-weight:bold;
- color: #2c3e50
-}
+  nav a {
+    font-weight: bold;
+    color: #2c3e50;
+  }
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+  nav a.router-link-exact-active {
+    color: #42b983;
+  }
 
-h2{
-  font-size:20px;
-}
-
+  h2 {
+    font-size: 20px;
+  }
 </style>

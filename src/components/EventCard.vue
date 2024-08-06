@@ -1,44 +1,39 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import Event from '@/types/Event';
-defineProps<{
-  event: Event
-}>()
-// const event = ref({
-//     id: 5928101,
-//     category: 'animal welfare',
-//     title: 'Cat Adoption Day',
-//     description:'Find your new feline friend at this event!',
-//     location: 'Meow Town',
-//     date: 'Jaunary 28,2022',
-//     time: '12:00',
-//     petsAllowed: true,
-//     organizer:'Kat Laydee'
-// })
+  import { ref, defineProps } from 'vue';
+  import { type Event } from '@/types';
+  import { RouterLink } from 'vue-router';
+  defineProps<{
+    event: Event;
+  }>();
 </script>
 
 <template>
-
-     
-      
-
+  <RouterLink
+    class="event-link"
+    :to="{ name: 'event-detail-view', params: { id: event?.id } }"
+  >
     <div class="event-class">
-        <h2>{{ event.title }}</h2>
-        <span>@{{ event.time }} on {{ event.date }}</span>
+      <div class="event-card">
+        <span>@{{ event?.time }} on {{ event?.date }}</span>
+        <h4>{{ event?.title }}</h4>
+      </div>
     </div>
-
+  </RouterLink>
 </template>
 <style scoped>
-.event-class{
-padding: 20px;
-width: 250px;
-cursor: pointer;
-border: 1px solid #39495c;
-margin-bottom: 18px;
-}
-.event-class:hover{
+  .event-link {
+    text-decoration: none;
+    color: #2c3e50;
+  }
+  .event-class {
+    padding: 20px;
+    width: 250px;
+    cursor: pointer;
+    border: 1px solid #39495c;
+    margin-bottom: 18px;
+  }
+  .event-class:hover {
     transform: scale(1.01);
-    box-shadow: 0 3px 12px 0 rgba(0,0,0.2);
-}
+    box-shadow: 0 3px 12px 0 rgba(0, 0, 0.2);
+  }
 </style>
-

@@ -1,4 +1,6 @@
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
+import type { Event } from '@/types';
+
 const apiClient = axios.create({
     baseURL: 'https://my-json-server.typicode.com/aye-nyeinSan/652115502',
     withCredentials: false,
@@ -16,11 +18,15 @@ const apiNewClient = axios.create({
     }
 })
 
+
 export default {
-    getAPIEvents(){
-        return apiClient.get('/events')
+    getAPIEvents(perPage:Number,page:Number){
+        return apiClient.get<Event[]>('/events?_limit='+perPage+'&_page='+page)
     },
     getNewAPIEvents(){
         return apiNewClient.get('/students')
+    },
+    getEventsByID(id:Number) : Promise<AxiosResponse<Event>>{
+        return apiClient.get<Event>(`events/${id}`)
     }
 }
