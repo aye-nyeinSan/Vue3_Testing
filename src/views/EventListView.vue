@@ -62,10 +62,9 @@ import {  useRouter } from 'vue-router';
   <div class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
     <!-- <NewEventCard  v-for ="event in events" :key="event.id" :event="event" />> -->
-  </div>
-  <div class="pagination">
+       <div class="pagination">
     <RouterLink
-      id="page-prev"
+     exact-active-class="text-indigo-700"
       :to="{ name: 'event-list-view', query: { page: page - 1 ,limit: props.limit}}"
       rel="prev"
       v-if="page != 1"
@@ -73,7 +72,7 @@ import {  useRouter } from 'vue-router';
       &#60; Prev Page
     </RouterLink>
     <RouterLink
-      id="page-next"
+     exact-active-class="text-indigo-700"
       :to="{ name: 'event-list-view', query: { page: page + 1 ,limit: props.limit} }"
       rel="next"
       v-if="hasNextPage"
@@ -81,24 +80,11 @@ import {  useRouter } from 'vue-router';
       Next Page &#62;
     </RouterLink>
   </div>
+  </div>
+
 </template>
 
 <style scoped>
  
-  .pagination {
-    display: flex;
-    justify-content: center;
-    width: 290px;
-  }
-  .pagination a {
-    flex: 1;
-    text-decoration: none;
-    color: #2c3e50;
-  }
-  #page-prev {
-    text-align: left;
-  }
-  #page-next {
-    text-align: right;
-  }
+
 </style>
