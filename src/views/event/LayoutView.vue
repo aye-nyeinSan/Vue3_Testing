@@ -18,12 +18,15 @@ import { useEventStore } from '@/stores/event';
 <template>
   <div v-if="event">
     <h1>{{ event.title }}</h1>
-    <nav>
-      <RouterLink :to="{ name: 'event-detail-view' }">Details</RouterLink>
+    <nav class="py-6">
+      <RouterLink class=" font-bold text-gray-700"
+  exact-active-class="  m-1 text-indigo-700" :to="{ name: 'event-detail-view' }">Details</RouterLink>
       |
-      <RouterLink :to="{ name: 'event-register-view' }">Register</RouterLink>
+      <RouterLink class=" font-bold  text-gray-700"
+  exact-active-class="  m-1 text-indigo-700" :to="{ name: 'event-register-view' }">Register</RouterLink>
       |
-      <RouterLink :to="{ name: 'event-edit-view' }">Edit</RouterLink>
+      <RouterLink class=" font-bold text-gray-700"
+  exact-active-class="  m-1 text-indigo-700" :to="{ name: 'event-edit-view' }">Edit</RouterLink>
     </nav>
     <RouterView :event="event" />
   </div>

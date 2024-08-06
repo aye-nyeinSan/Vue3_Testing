@@ -13,7 +13,7 @@
     :to="{ name: 'event-detail-view', params: { id: event?.id } }"
   >
     <div class="event-class">
-      <div class="event-card">
+      <div class="cursor-pointer border border-gray-600 p-[20px] w-[250px] mb-[18px] hover:scale-101 hover:shadow-sp">
         <span>@{{ event?.time }} on {{ event?.date }}</span>
         <h4>{{ event?.title }}</h4>
       </div>
@@ -21,19 +21,5 @@
   </RouterLink>
 </template>
 <style scoped>
-  .event-link {
-    text-decoration: none;
-    color: #2c3e50;
-  }
-  .event-class {
-    padding: 20px;
-    width: 250px;
-    cursor: pointer;
-    border: 1px solid #39495c;
-    margin-bottom: 18px;
-  }
-  .event-class:hover {
-    transform: scale(1.01);
-    box-shadow: 0 3px 12px 0 rgba(0, 0, 0.2);
-  }
+ 
 </style>
