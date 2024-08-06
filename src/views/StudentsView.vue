@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Event from '@/types/Event'
+import {type StudentEvent} from '@/types'
 import StudentCard from '@/components/StudentCard.vue';
 
 import { ref, onMounted } from 'vue';
 import EventService from '@/services/EventService';
-const events=ref<Event[]>([])
+const events=ref<StudentEvent[]>([])
 onMounted(()=>{
   EventService.getNewAPIEvents().then((response)=>{
     events.value=response.data
