@@ -11,7 +11,7 @@ import {  useRouter } from 'vue-router';
   const events = ref<Event[] | null>(null);
   const totalEvents = ref(0);
   const hasNextPage = computed(() => {
-    const totalPages = Math.ceil(totalEvents.value / 3);
+    const totalPages = Math.ceil(totalEvents.value / limit.value);
     return page.value < totalPages;
   });
   const router = useRouter();
@@ -22,7 +22,7 @@ import {  useRouter } from 'vue-router';
     },
     limit:{
          type: Number,
-      required: true,
+         required: true,
     }
   });
   const page = computed(() => props.page);
@@ -30,7 +30,7 @@ import {  useRouter } from 'vue-router';
   onMounted(() => {
     watchEffect(() => {
      
-      EventService.getAPIEvents(3, page.value).then((response) => {
+      EventService.getAPIEvents(limit.value, page.value).then((response) => {
         events.value = response.data;
         totalEvents.value = response.headers['x-total-count'];
       }).catch((error) => {
